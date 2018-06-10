@@ -1,9 +1,12 @@
-; This will be the boot sector of my operating system:
+;
+; A boot sector that prints a message to the screen using a BIOS routine:
+;
 
-; Welcome message:
-mov ah, 0x0e ; tty mode
-mov al, 'H'
-int 0x10 ; Print the contents of the al register
+mov ah, 0x0e	; Scrolling teletype interrupt (tty mode): 
+				; prints al to screen
+
+mov al, 'H'	; Load each character into al
+int 0x10	; Call the interrupt
 mov al, 'e'
 int 0x10
 mov al, 'l'
@@ -12,11 +15,10 @@ int 0x10
 mov al, 'o'
 int 0x10
 
-; Infinite loop:
-jmp $
+jmp $	; Jump to the current address (Infinite loop)
 
-; Fill 510 minus size of previous code 0's
-times 510-($-$$) db 0
+times 510-($-$$) db 0	; Fill 510 minus size of previous
+						; code 0's for padding
 
-; Helps the bios find end of boot sector
-dw 0xaa55
+dw 0xaa55	; Magic number that helps the 
+			; bios find end of boot sector
