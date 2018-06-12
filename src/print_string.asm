@@ -4,9 +4,9 @@
 
 ; mov ah, 0x0e
 ; while(al != 0) {
-;	mov al, [bx + ax]
+;	mov al, [bx]
 ;	int 0x10
-;	ax++
+;	bx++
 ;}
 
 
