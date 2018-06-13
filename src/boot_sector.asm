@@ -10,9 +10,13 @@
 	mov bx, GOODBYE_MESSAGE
 	call print_string
 
+	mov dx, 0x1bf6
+	call print_hex
+
 	jmp $	; Jump to the current address (Infinite loop)
 
 %include "print_string.asm"
+%include "print_hex.asm"
 
 ; Data
 WELCOME_MESSAGE:
