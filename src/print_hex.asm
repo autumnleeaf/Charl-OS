@@ -24,12 +24,12 @@ print_hex_loop:
 	add ax, 1			; HEX_OUT + 7 (end of string)
 	cmp bx, ax			; otherwise jump out of the loop
 	je print_hex_end
-	mov ax, dx		; store the value from dx in ax
-	and ax, 0x000f	; mask everything but the last 4 bits
-	shr dx, 4		; shift dx by 4 for the next cycle
+	mov ax, dx			; store the value from dx in ax
+	and ax, 0x000f		; mask everything but the last 4 bits
+	shr dx, 4			; shift dx by 4 for the next cycle
 	cmp ax, 10
 	jl print_hex_endif
-	add ax, 11		; if the value is greater than 0xa, add 11
+	add ax, 11			; if the value is greater than 0xa, add 11
 print_hex_endif:
 	add [bx], ax ;
 	sub bx, 1
