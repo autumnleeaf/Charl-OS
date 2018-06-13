@@ -1,3 +1,6 @@
+%ifndef PRINT_STRING_ASM
+%define PRINT_STRING_ASM
+
 ;
 ; Prints the contents of a string stored at bx
 ;
@@ -7,8 +10,7 @@
 ;	mov al, [bx + ax]
 ;	int 0x10
 ;	ax++
-;}
-
+; }
 
 print_string:
 	pusha
@@ -23,3 +25,5 @@ print_string_loop:
 print_string_end:
 	popa
 	ret
+
+%endif
