@@ -6,7 +6,7 @@
 ;
 
 ; bx = 0
-; while(bx < 4) {
+; for(cx = 0; cx < 4; cx++) {
 ;	ax = [bx] and 0x000f
 ;	dx >> 4
 ;	if(ax > 10)
@@ -17,25 +17,33 @@
 
 print_hex:
 	pusha
-	mov bx, HEX_OUT
-	add bx, 5
+	mov cx, 0				; index
+
 print_hex_loop:
-	mov ax, HEX_OUT 	; we want to see if bx is at 
-	add ax, 1			; HEX_OUT + 7 (end of string)
-	cmp bx, ax			; otherwise jump out of the loop
-	je print_hex_end
-	mov ax, dx			; store the value from dx in ax
-	and ax, 0x000f		; mask everything but the last 4 bits
-	shr dx, 4			; shift dx by 4 for the next cycle
-	cmp ax, 10
-	jl print_hex_endif
-	add ax, 11			; if the value is greater than 0xa, add 11
+	cmp cx, 4				; check if cx >= 4
+	jge print_hex_end		; if so jump to the end
+
+	mov ax, dx				; store the value from dx in ax
+	and ax, 0x000f			; mask everything but the last 4 bits
+
+	add al, 0x30			; increment by 0x30
+	cmp al, 0x39
+	jle print_hex_endif
+	add al, 0x07			; if the value is greater than 0xa, add 0x11
+
 print_hex_endif:
-	add [bx], ax ;
-	sub bx, 1
-	jmp print_hex_loop
+	mov bx, HEX_OUT + 5		; move pointer to appropriate place
+	sub bx, cx
+
+	mov [bx], al			; update value to print
+
+	shr dx, 4				; shift dx by 4 for the next cycle
+
+	add cx, 1				; index++
+	jmp print_hex_loop		; jump
+
 print_hex_end:
-	mov bx, HEX_OUT
+	mov bx, HEX_OUT			; print the string we built
 	call print_string
 	popa
 	ret
