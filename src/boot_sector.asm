@@ -9,15 +9,17 @@
 	mov sp, bp
 
 	mov bx, 0x9000			; Load to 0x0000(es):0x9000(bx)
-	mov dh, 5				; Load 5 sectors
+	mov dh, 2				; Load 5 sectors
 	mov dl, [BOOT_DRIVE]
 	call disk_load
 
 	mov dx, [0x9000]		; Test to see if memory at this location is 0xdada
 	call print_hex
+	call print_nl
 
 	mov dx, [0x9000 + 512]	; Test to see if memory at this location is 0xface
 	call print_hex
+	call print_nl
 
 	jmp $					; Jump to the current address (Infinite loop)
 
@@ -35,6 +37,7 @@ BOOT_DRIVE:
 	dw 0xaa55				; Magic number that helps the 
 							; bios find end of boot sector
 
-; Place these in memory to test our disk_load function
-	times 256 dw 0xdada
-	times 256 dw 0xface
+; boot sector = sector 1 of cyl 0 of head 0 of hdd 0
+; from now on = sector 2 ...
+	times 256 dw 0xdada		; Sector 2 = 512 bytes
+	times 256 dw 0xface		; Sector 3 = 512 bytes
