@@ -3,30 +3,38 @@
 ;
 
 [org 0x7c00]				; Tell the assembler that memory addresses start at 0x7c00 (After BIOS memory)
+	mov [BOOT_DRIVE], dl	; Save the location of out boot drive (default of dl)
 
-	mov bx, WELCOME_MESSAGE
-	call print_string
+	mov bp, 0x8000			; Move the stack to a safe location
+	mov sp, bp
 
-	mov bx, GOODBYE_MESSAGE
-	call print_string
+	mov bx, 0x9000			; Load to 0x0000(es):0x9000(bx)
+	mov dh, 5				; Load 5 sectors
+	mov dl, [BOOT_DRIVE]
+	call disk_load
 
-	mov dx, 0x1bf6
+	mov dx, [0x9000]		; Test to see if memory at this location is 0xdada
+	call print_hex
+
+	mov dx, [0x9000 + 512]	; Test to see if memory at this location is 0xface
 	call print_hex
 
 	jmp $					; Jump to the current address (Infinite loop)
 
 %include "print_string.asm"
 %include "print_hex.asm"
+%include "disk_load.asm"
 
 ; Data
-WELCOME_MESSAGE:
-	db 'Booting Charl-OS...',0
-
-GOODBYE_MESSAGE:
-	db 'Goodbye...',0
+BOOT_DRIVE:
+	db 0
 
 	times 510-($-$$) db 0	; Fill 510 minus size of previous
 							; code 0's for padding
 
 	dw 0xaa55				; Magic number that helps the 
 							; bios find end of boot sector
+
+; Place these in memory to test our disk_load function
+	times 256 dw 0xdada
+	times 256 dw 0xface
