@@ -18,6 +18,19 @@ sudo apt-get install nasm qemu
 
 The operating system may also be run in other cpu emulators such as Bochs, virtual machines such as VMWare or VirtualBox, or any computer after formatting it onto a boot disk. Virtual machines and running as a host OS are better optimized ways of running the OS; however, it takes longer to set up the OS in these environments, so for development purposes I strongly reccomend using an emulator.
 
+## Building and Running
+The main .asm file that needs to be compiled is `boot_sector.asm`, this can be done with the following command:
+```
+nasm boot_sector.asm -f bin -o boot_sector.bin
+```
+> Replace 'boot_sector.bin' with whatever you want the binary to be called
+
+To run this with qemu (assuming you are running the latest version), use the command:
+```
+qemu-system-x86_64 boot_sector.bin
+```
+> If you named your binary something different, use that name instead
+
 ## Resources and Inspirations
 * https://github.com/cfenollosa/os-tutorial
 * http://www.cs.bham.ac.uk/%7Eexr/lectures/opsys/10_11/lectures/os-dev.pdf
