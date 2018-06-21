@@ -35,3 +35,7 @@ qemu-system-x86_64 boot_sector.bin
 * https://github.com/cfenollosa/os-tutorial
 * http://www.cs.bham.ac.uk/%7Eexr/lectures/opsys/10_11/lectures/os-dev.pdf
 * https://github.com/pervognsen/bitwise
+* https://software.intel.com/sites/default/files/managed/39/c5/325462-sdm-vol-1-2abcd-3abcd.pdf
+* https://wiki.osdev.org/Main_Page
+* https://littleosbook.github.io/
+* https://web.archive.org/web/20160412174753/http://www.jamesmolloy.co.uk/tutorial_html/index.html
