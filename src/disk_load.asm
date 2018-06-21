@@ -49,7 +49,7 @@ DISK_ERROR_MSG:
 SECTORS_ERROR_MSG:
 	db "Incorrect number of sectors read!",0
 
-%include "print_string.asm"
-%include "print_hex.asm"
+%include "print/print_string.asm"
+%include "print/print_hex.asm"
 
 %endif

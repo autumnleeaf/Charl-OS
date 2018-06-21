@@ -23,8 +23,8 @@
 
 	jmp $					; Jump to the current address (Infinite loop)
 
-%include "print_string.asm"
-%include "print_hex.asm"
+%include "print/print_string.asm"
+%include "print/print_hex.asm"
 %include "disk_load.asm"
 
 ; Data
