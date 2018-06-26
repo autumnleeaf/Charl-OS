@@ -50,6 +50,6 @@ print_hex_end:
 
 HEX_OUT: db '0x0000',0	; Output of print_hex will be stored here
 
-%include "print_string.asm"
+%include "print/print_string.asm"
 
 %endif

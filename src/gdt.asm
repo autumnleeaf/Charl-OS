@@ -1,9 +1,9 @@
+%ifndef GDT_ASM
+%define GDT_ASM
+
 ;
 ; Creates the Global Descriptor Table for our OS
 ;
-
-%ifndef GDT_ASM
-%define GDT_ASM
 
 ; Breakdown
 ;	Base: 0x0
