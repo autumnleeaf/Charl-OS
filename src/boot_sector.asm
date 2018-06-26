@@ -3,33 +3,31 @@
 ;
 
 [org 0x7c00]				; Tell the assembler that memory addresses start at 0x7c00 (After BIOS memory)
-	mov [BOOT_DRIVE], dl	; Save the location of out boot drive (default of dl)
-
-	mov bp, 0x8000			; Move the stack to a safe location
+	mov bp, 0x9000			; Move the stack to a safe location
 	mov sp, bp
 
-	mov bx, 0x9000			; Load to 0x0000(es):0x9000(bx)
-	mov dh, 2				; Load 5 sectors
-	mov dl, [BOOT_DRIVE]
-	call disk_load
-
-	mov dx, [0x9000]		; Test to see if memory at this location is 0xdada
-	call print_hex
+	mov bx, MSG_REAL_MODE
+	call print_string
 	call print_nl
 
-	mov dx, [0x9000 + 512]	; Test to see if memory at this location is 0xface
-	call print_hex
-	call print_nl
+	call switch_to_pm
 
 	jmp $					; Jump to the current address (Infinite loop)
 
 %include "print/print_string.asm"
 %include "print/print_hex.asm"
-%include "disk_load.asm"
+%include "print/print_string_pm.asm"
+%include "pm_switch.asm"
+%include "gdt.asm"
 
-; Data
-BOOT_DRIVE:
-	db 0
+[bits 32]
+BEGIN_PM:					; Jump here after switch
+	mov ebx, MSG_PROT_MODE
+	call print_string_pm
+	jmp $
+
+MSG_REAL_MODE db "Started in 16-bit real mode",0
+MSG_PROT_MODE db "Loaded 32-bit protected mode",0
 
 	times 510-($-$$) db 0	; Fill 510 minus size of previous
 							; code 0's for padding
