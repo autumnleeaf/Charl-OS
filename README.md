@@ -39,3 +39,4 @@ qemu-system-x86_64 boot_sector.bin
 * https://wiki.osdev.org/Main_Page
 * https://littleosbook.github.io/
 * https://web.archive.org/web/20160412174753/http://www.jamesmolloy.co.uk/tutorial_html/index.html
+* https://www.reddit.com/r/osdev/
