@@ -11,7 +11,7 @@ KERNEL_OFFSET equ 0x1000	; The offset where we will store the kernel
 	mov sp, bp
 
 	mov bx, MSG_REAL_MODE
-	call print_string
+	call print_string 
 	call print_nl
 
 	call load_kernel		; Load the kernel
@@ -30,7 +30,7 @@ KERNEL_OFFSET equ 0x1000	; The offset where we will store the kernel
 [bits 16]
 
 load_kernel:
-	mov bx, MSG_LOAD_KERNEL	; Print the loading kernel message
+	mov bx, MSG_LOAD_KERNEL	; Print dthe loading kernel message
 	call print_string
 	call print_nl
 
